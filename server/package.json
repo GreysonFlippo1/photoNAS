@@ -2,7 +2,7 @@
   "name": "photoNAS server",
   "version": "0.0.1",
   "main": "index.js",
-  "author": "greysonflippo1",  
+  "author": "greysonflippo1",
   "dependencies": {
     "express": "^4.19.2"
   },
