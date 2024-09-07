@@ -24,9 +24,18 @@ app.get('/library/:libraryName', (req, res) => {
         res.sendStatus(404)
     }
 
+    let libraryInfo = {}
+    try {
+        libraryInfo = require(path.join(__dirname, searchedLibrary.path, 'info.json'))
+    } catch (err) {
+        // console.log('library has no info file')
+    } 
+
     const libraryDetails = {
-        library: searchedLibrary.name,
-        info: {},
+        info: {
+            ...searchedLibrary,
+            ...libraryInfo
+        },
         files: [],
     }
 
