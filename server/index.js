@@ -43,7 +43,7 @@ app.get('/library/:libraryName', (req, res) => {
         libraryDetails.files.push(file)
     });
 
-    res.json(JSON.stringify(libraryDetails))
+    res.json(libraryDetails)
 })
 
 app.listen(3000, () => console.log('listening on port 3000'))
