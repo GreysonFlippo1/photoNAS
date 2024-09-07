@@ -21,14 +21,14 @@ app.get('/library/:libraryName', (req, res) => {
     const searchedLibrary = config.libraryDirectories.find(dir => dir.name === req.params.libraryName)
 
     if (!searchedLibrary) {
-        res.sendStatus(404)
+        res.status(404).send('Library not found, please double check the library name is correct')
     }
 
     let libraryInfo = {}
     try {
         libraryInfo = require(path.join(__dirname, searchedLibrary.path, 'info.json'))
     } catch (err) {
-        // console.log('library has no info file')
+        console.log(`warning: library "${searchedLibrary}" lacks info.json file`)
     } 
 
     const libraryDetails = {
