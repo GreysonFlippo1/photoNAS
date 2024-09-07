@@ -8,7 +8,7 @@ const config = require('./config.json')
 
 app.get('/', (req, res) => res.send('Server is running'))
 
-const defaultLibrary = config.libraryDirectories.find(dir => dir.isDefault)
+// const defaultLibrary = config.libraryDirectories.find(dir => dir.isDefault)
 
 app.use('/library/:libraryName/:file', (req, res) => {
     const searchedLibrary = config.libraryDirectories.find(dir => dir.name === req.params.libraryName)
