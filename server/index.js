@@ -9,6 +9,18 @@ const config = require('./config.json')
 app.get('/', (req, res) => res.send('Server is running'))
 
 // const defaultLibrary = config.libraryDirectories.find(dir => dir.isDefault)
+app.get('/libraries', (req, res) => {
+    const libraries = config.libraryDirectories.map(lib => {
+        let libraryInfo = {}
+        try {
+            libraryInfo = require(path.join(__dirname, lib.path, 'info.json'))
+        } catch (err) {
+            console.log(`warning: library "${lib}" lacks info.json file`)
+        }
+        return {...lib, info: {...libraryInfo}}
+    })
+    res.json(libraries)
+})
 
 app.use('/library/:libraryName/:file', (req, res) => {
     const searchedLibrary = config.libraryDirectories.find(dir => dir.name === req.params.libraryName)
