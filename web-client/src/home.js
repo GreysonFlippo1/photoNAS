@@ -13,7 +13,21 @@ const fetchLibraries = async (setLibraries) => {
     }
 }
 
-export const Home = (props) => {
+const Libraries = (props) => {
+
+    return <div>
+        {props.libraries.map(library => {
+            return <div key={library.path}>
+                Name: {library.name} <br/>
+                Path: {library.path} <br/>
+                Desc: {library.info.description ?? 'None'} <br/>
+                Created: {library.info.created} <br/>
+            </div>
+        })}
+    </div>
+}
+
+export const Home = () => {
 
     const [libraries, setLibraries] = React.useState(void 0)
 
@@ -24,6 +38,8 @@ export const Home = (props) => {
     console.log('libraries found: ', libraries)
 
     return <div>
-        This is some text
+        {
+            libraries && libraries.length ? <Libraries libraries={libraries}/> : 'No Libraries Found :('
+        }
     </div>
 }

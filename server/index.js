@@ -10,6 +10,7 @@ app.get('/', (req, res) => res.send('Server is running'))
 
 // const defaultLibrary = config.libraryDirectories.find(dir => dir.isDefault)
 app.get('/libraries', (req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', '*')
     const libraries = config.libraryDirectories.map(lib => {
         let libraryInfo = {}
         try {
@@ -23,6 +24,7 @@ app.get('/libraries', (req, res) => {
 })
 
 app.use('/library/:libraryName/:file', (req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', '*')
     const searchedLibrary = config.libraryDirectories.find(dir => dir.name === req.params.libraryName)
     if (searchedLibrary) {
         res.sendFile(path.join(__dirname, searchedLibrary.path, req.params.file))
@@ -30,6 +32,7 @@ app.use('/library/:libraryName/:file', (req, res) => {
 })
 
 app.get('/library/:libraryName', (req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', '*')
     const searchedLibrary = config.libraryDirectories.find(dir => dir.name === req.params.libraryName)
 
     if (!searchedLibrary) {
