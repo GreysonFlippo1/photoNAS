@@ -1,9 +1,7 @@
-import * as React from 'react';
-import { createRoot } from 'react-dom/client';
-
-// Clear the existing HTML content
-// document.body.innerHTML = '<div id="app"></div>';
+import * as React from 'react'
+import { createRoot } from 'react-dom/client'
+import { Home } from './home'
 
 // Render your React component instead
-const root = createRoot(document.getElementById('root'));
-root.render(<h1>Hello, world</h1>);
+const root = createRoot(document.getElementById('root'))
+root.render(<Home />)

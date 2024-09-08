@@ -16,6 +16,7 @@ module.exports = {
   devtool: 'inline-source-map',
   devServer: {
     port: 4000,
+    allowedHosts: 'all',
     static: './dist',
   },
   optimization: {

@@ -58,4 +58,4 @@ app.get('/library/:libraryName', (req, res) => {
     res.json(libraryDetails)
 })
 
-app.listen(3000, () => console.log('listening on port 3000'))
+app.listen(config.port, () => console.log('serving on port 3000'))
