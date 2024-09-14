@@ -16,7 +16,7 @@ app.get('/libraries', (req, res) => {
         try {
             libraryInfo = require(path.join(__dirname, lib.path, 'info.json'))
         } catch (err) {
-            console.log(`warning: library "${lib}" lacks info.json file`)
+            console.log(`warning: library "${lib.name}" lacks info.json file`)
         }
         return {...lib, info: {...libraryInfo}}
     })
