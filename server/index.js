@@ -3,12 +3,10 @@ const path = require('path')
 const fs = require('fs')
 const app = express()
 
-//user config
 const config = require('./user-config.json')
 
 app.get('/', (req, res) => res.send('Server is running'))
 
-// const defaultLibrary = config.libraryDirectories.find(dir => dir.isDefault)
 app.get('/libraries', (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*')
     const libraries = config.libraryDirectories.map(lib => {
