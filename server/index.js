@@ -4,7 +4,7 @@ const fs = require('fs')
 const app = express()
 
 //user config
-const config = require('./config.json')
+const config = require('./user-config.json')
 
 app.get('/', (req, res) => res.send('Server is running'))
 
@@ -13,12 +13,21 @@ app.get('/libraries', (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*')
     const libraries = config.libraryDirectories.map(lib => {
         let libraryInfo = {}
+        const preview = []
+
         try {
-            libraryInfo = require(path.join(__dirname, lib.path, 'info.json'))
+            libraryInfo = require(path.join(lib.path, 'info.json'))
         } catch (err) {
             console.log(`warning: library "${lib.name}" lacks info.json file`)
         }
-        return {...lib, info: {...libraryInfo}}
+        if (req.query.preview) {
+            fs.readdirSync(path.join(lib.path)).forEach((file, i) => {
+                if (i < req.query.preview) {
+                    preview.push(file)
+                }
+            });
+        }
+        return {...lib, info: {...libraryInfo}, preview}
     })
     res.json(libraries)
 })
@@ -27,7 +36,7 @@ app.use('/library/:libraryName/:file', (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*')
     const searchedLibrary = config.libraryDirectories.find(dir => dir.name === req.params.libraryName)
     if (searchedLibrary) {
-        res.sendFile(path.join(__dirname, searchedLibrary.path, req.params.file))
+        res.sendFile(path.join(searchedLibrary.path, req.params.file))
     }
 })
 
@@ -41,7 +50,7 @@ app.get('/library/:libraryName', (req, res) => {
 
     let libraryInfo = {}
     try {
-        libraryInfo = require(path.join(__dirname, searchedLibrary.path, 'info.json'))
+        libraryInfo = require(path.join(searchedLibrary.path, 'info.json'))
     } catch (err) {
         console.log(`warning: library "${searchedLibrary}" lacks info.json file`)
     } 
@@ -54,7 +63,7 @@ app.get('/library/:libraryName', (req, res) => {
         files: [],
     }
 
-    fs.readdirSync(path.join(__dirname, searchedLibrary.path)).forEach(file => {
+    fs.readdirSync(path.join(searchedLibrary.path)).forEach(file => {
         libraryDetails.files.push(file)
     });
 

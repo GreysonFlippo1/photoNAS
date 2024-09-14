@@ -18,6 +18,7 @@ module.exports = {
     port: 4000,
     allowedHosts: 'all',
     static: './dist',
+    host: 'photonas.io',
   },
   optimization: {
     runtimeChunk: 'single',

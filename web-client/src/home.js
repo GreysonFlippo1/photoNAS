@@ -1,11 +1,13 @@
 import * as React from 'react'
+import { LibraryView } from './tabs/libraryview'
+import { filterFiles } from './common_funtions'
+
 const config = require('../config.json')
 
 const fetchLibraries = async (setLibraries) => {
     const server_location = config.server_address
     try {
-        const response = await fetch(`${server_location}/libraries`)
-        console.log('connected to: ', config.server_address)
+        const response = await fetch(`${server_location}/libraries?preview=2`)
         const data = await response.json()
         setLibraries(data)
     } catch {
@@ -15,31 +17,51 @@ const fetchLibraries = async (setLibraries) => {
 
 const Libraries = (props) => {
 
-    return <div>
-        {props.libraries.map(library => {
-            return <div key={library.path}>
-                Name: {library.name} <br/>
-                Path: {library.path} <br/>
-                Desc: {library.info.description ?? 'None'} <br/>
-                Created: {library.info.created} <br/>
+    const {libraries, setLibrary, photo_formats, serverLocation} = props
+
+    return <>
+        {libraries.map(library => {
+            const preview = filterFiles(library.preview, photo_formats)[0]
+        
+            return <div key={library.path} className='libraryCard' onClick={() => { setLibrary(library.name) }}>
+                {preview && <div className='libraryBG' style={{backgroundImage: `url("${serverLocation}/library/${library.name}/${preview}")`}}></div>}
+                <div className='libraryInfo'>
+                    {library.name}
+                    {/* Path: {library.path} <br/>
+                    Desc: {library.info.description ?? 'None'} <br/>
+                    Created: {library.info.created} <br/> */}
+                </div>
             </div>
         })}
-    </div>
+    </>
 }
 
 export const Home = () => {
 
     const [libraries, setLibraries] = React.useState(void 0)
+    const [selectedLibrary, setLibrary] = React.useState(void 0)
 
     React.useEffect(() => {
-        fetchLibraries(setLibraries)
+        fetchLibraries(setLibraries, setLibrary)
     }, [setLibraries])
 
-    console.log('libraries found: ', libraries)
+    console.log(libraries)
 
-    return <div>
+    return <>
+        <>
         {
-            libraries && libraries.length ? <Libraries libraries={libraries}/> : 'No Libraries Found :('
+            libraries && libraries.length ?
+                <div className='librariesGrid'>
+                    <Libraries libraries={libraries} setLibrary={setLibrary} photo_formats={config.photo_formats} serverLocation={config.server_address} /> 
+                </div> : 'No Libraries Found :('
         }
-    </div>
+        </>
+        <>
+        {
+            selectedLibrary ? <>
+                <LibraryView libraryName={selectedLibrary} serverLocation={config.server_address} photo_formats={config.photo_formats} />
+                </> : ''
+        }
+        </>
+    </>
 }
