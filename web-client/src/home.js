@@ -43,7 +43,7 @@ export const Home = () => {
 
     return <>
         <>
-        <div className='headding'>
+        <div className='header'>
             <h1>Libraries</h1>
         </div>
         {
@@ -56,7 +56,7 @@ export const Home = () => {
         <>
         {
             selectedLibrary ? <>
-                <div className='headding'>
+                <div className='header libraryHeader'>
                     <h1>{selectedLibrary.name}</h1>
                     <h3>{selectedLibrary.info.description}</h3>
                     <div className='infoTable'>
