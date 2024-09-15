@@ -45,8 +45,6 @@ export const Home = () => {
         fetchLibraries(setLibraries, setLibrary)
     }, [setLibraries])
 
-    console.log(libraries)
-
     return <>
         <>
         {
