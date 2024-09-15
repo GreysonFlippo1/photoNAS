@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { LibraryView } from './tabs/libraryview'
-import { filterFiles } from './common_funtions'
 
 const config = require('../config.json')
 
@@ -17,11 +16,11 @@ const fetchLibraries = async (setLibraries) => {
 
 const Libraries = (props) => {
 
-    const {libraries, setLibrary, photo_formats, serverLocation} = props
+    const {libraries, setLibrary, serverLocation} = props
 
     return <>
         {libraries.map(library => {
-            const preview = filterFiles(library.preview, photo_formats)[0]
+            const preview = library.preview[0]
         
             return <div key={library.path} className='libraryCard' onClick={() => { setLibrary(library) }}>
                 {preview && <div className='libraryBG' style={{backgroundImage: `url("${serverLocation}/library/${library.name}/${preview}")`}}></div>}
@@ -50,7 +49,7 @@ export const Home = () => {
         {
             libraries && libraries.length ?
                 <div className='librariesGrid'>
-                    <Libraries libraries={libraries} setLibrary={setLibrary} photo_formats={config.photo_formats} serverLocation={config.server_address} /> 
+                    <Libraries libraries={libraries} setLibrary={setLibrary} serverLocation={config.server_address} /> 
                 </div> : 'No Libraries Found :('
         }
         </>
