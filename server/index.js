@@ -3,7 +3,7 @@ const path = require('path')
 const fs = require('fs')
 const app = express()
 
-const photo_formats = ["png", "jpg", "gif", "heic"]
+const photo_formats = ["png", "jpg", "gif", "heic", "jpeg"]
 
 function filterFile(file, formats) {
     return formats.includes(`${file.split('.').slice(-1)}`.toLowerCase())

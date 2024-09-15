@@ -16,13 +16,13 @@ const fetchLibraries = async (setLibraries) => {
 
 const Libraries = (props) => {
 
-    const {libraries, setLibraries, fetchLibraries, setLibrary, serverLocation} = props
+    const {libraries, setLibrary, serverLocation} = props
 
     return <>
         {libraries.map(library => {
             const preview = library.preview[0]
         
-            return <div key={library.path} className='libraryCard' onClick={() => {  fetchLibraries(setLibraries); setLibrary(library) }}>
+            return <div key={library.path} className='libraryCard' onClick={() => { setLibrary(library) }}>
                 {preview && <div className='libraryBG' style={{backgroundImage: `url("${serverLocation}/library/${library.name}/${preview}")`}}></div>}
                 <div className='libraryGradient'></div>
                 <div className='libraryInfo'>
@@ -52,7 +52,7 @@ export const Home = () => {
         <div className='librariesGrid'>
         {
             libraries && libraries.length ?
-                <Libraries libraries={libraries} setLibraries={setLibraries} fetchLibraries={fetchLibraries} setLibrary={setLibrary} serverLocation={config.server_address} /> 
+                <Libraries libraries={libraries} setLibrary={setLibrary} serverLocation={config.server_address} /> 
                 : <h1>{`No Libraries Found :(`}</h1>
         }
         </div>
