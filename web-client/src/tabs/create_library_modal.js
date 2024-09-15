@@ -29,8 +29,8 @@ const createLibrary = async (libraryOptions, server_location, setCreatingLibrary
             body: JSON.stringify(formattedData),
             headers,
         })
-        const data = await response.json()
-        console.log('complete!', data)
+        await response.json()
+        console.log('complete!')
         setCreatingLibrary(void 0)
     } catch {
         console.log('failed to connect: ', server_location)
