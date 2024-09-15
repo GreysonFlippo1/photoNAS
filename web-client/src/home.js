@@ -27,9 +27,6 @@ const Libraries = (props) => {
                 {preview && <div className='libraryBG' style={{backgroundImage: `url("${serverLocation}/library/${library.name}/${preview}")`}}></div>}
                 <div className='libraryInfo'>
                     {library.name}
-                    {/* Path: {library.path} <br/>
-                    Desc: {library.info.description ?? 'None'} <br/>
-                    Created: {library.info.created} <br/> */}
                 </div>
             </div>
         })}
@@ -67,6 +64,8 @@ export const Home = () => {
                         <h6>Created {selectedLibrary.info.created}</h6>
                         <h6>&#183;</h6>
                         <h6>Updated {selectedLibrary.info.updated ?? selectedLibrary.info.created}</h6>
+                        <h6>&#183;</h6>
+                        <h6>Location {selectedLibrary.path}</h6>
                     </div>
                 </div>
                 <LibraryView libraryName={selectedLibrary.name} serverLocation={config.server_address} photo_formats={config.photo_formats} />
