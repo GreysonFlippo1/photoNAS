@@ -3,12 +3,26 @@ const path = require('path')
 const fs = require('fs')
 const app = express()
 
-const config = require('./user-config.json')
+const photo_formats = ["png", "jpg", "gif", "heic"]
+
+function filterFile(file, formats) {
+    return formats.includes(`${file.split('.').slice(-1)}`.toLowerCase())
+}
 
 app.get('/', (req, res) => res.send('Server is running'))
 
+const getConfig = () => {
+    try {
+        return require(path.join(__dirname, 'user-config.json'))
+    }
+    catch (e) {
+        console.error('No configuration file')
+    }
+}
+
 app.get('/libraries', (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*')
+    const config = getConfig()
     const libraries = config.libraryDirectories.map(lib => {
         let libraryInfo = {}
         const preview = []
@@ -19,8 +33,8 @@ app.get('/libraries', (req, res) => {
             console.log(`warning: library "${lib.name}" lacks info.json file`)
         }
         if (req.query.preview) {
-            fs.readdirSync(path.join(lib.path)).forEach((file, i) => {
-                if (i < req.query.preview) {
+            fs.readdirSync(path.join(lib.path)).forEach(file => {
+                if (preview.length < req.query.preview && filterFile(file, photo_formats)) {
                     preview.push(file)
                 }
             });
@@ -32,6 +46,7 @@ app.get('/libraries', (req, res) => {
 
 app.use('/library/:libraryName/:file', (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*')
+    const config = getConfig()
     const searchedLibrary = config.libraryDirectories.find(dir => dir.name === req.params.libraryName)
     if (searchedLibrary) {
         res.sendFile(path.join(searchedLibrary.path, req.params.file))
@@ -40,6 +55,7 @@ app.use('/library/:libraryName/:file', (req, res) => {
 
 app.get('/library/:libraryName', (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*')
+    const config = getConfig()
     const searchedLibrary = config.libraryDirectories.find(dir => dir.name === req.params.libraryName)
 
     if (!searchedLibrary) {
@@ -68,4 +84,4 @@ app.get('/library/:libraryName', (req, res) => {
     res.json(libraryDetails)
 })
 
-app.listen(config.port, () => console.log('serving on port 3000'))
+app.listen(getConfig().port, () => console.log('serving on port 3000'))

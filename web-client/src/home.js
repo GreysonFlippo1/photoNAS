@@ -7,7 +7,7 @@ const config = require('../config.json')
 const fetchLibraries = async (setLibraries) => {
     const server_location = config.server_address
     try {
-        const response = await fetch(`${server_location}/libraries?preview=2`)
+        const response = await fetch(`${server_location}/libraries?preview=1`)
         const data = await response.json()
         setLibraries(data)
     } catch {
