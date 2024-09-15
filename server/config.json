@@ -5,5 +5,15 @@
             "name": "library1",
             "path": "/Users/username/photos"
         }
+    ],
+    "libraryParents": [
+        {
+            "name": "Main Storage",
+            "path": "/Users/me/Documents/photoLibraries"
+        },
+        {
+            "name": "External Volume",
+            "path": "/Volumes/SSD/libraries"
+        }
     ]
 }

@@ -1,15 +1,11 @@
 const express = require('express')
 const path = require('path')
 const fs = require('fs')
+const cors = require('cors')
 const app = express()
 
-const photo_formats = ["png", "jpg", "gif", "heic", "jpeg"]
-
-function filterFile(file, formats) {
-    return formats.includes(`${file.split('.').slice(-1)}`.toLowerCase())
-}
-
-app.get('/', (req, res) => res.send('Server is running'))
+app.use(cors())
+app.use(express.json())
 
 const getConfig = () => {
     try {
@@ -20,8 +16,28 @@ const getConfig = () => {
     }
 }
 
+const corsOptions = {
+    origin: getConfig().clientAddress,
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+
+const photo_formats = ["png", "jpg", "gif", "heic", "jpeg", "webp"]
+
+function filterFile(file, formats) {
+    return formats.includes(`${file.split('.').slice(-1)}`.toLowerCase())
+}
+
+app.get('/', (req, res) => res.send('Server is running'))
+
+const setHeaders = (res) => {
+    const config = getConfig()
+    res.setHeader('Access-Control-Allow-Origin', config.clientAddress)
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT')
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
+}
+
 app.get('/libraries', (req, res) => {
-    res.setHeader('Access-Control-Allow-Origin', '*')
+    setHeaders(res)
     const config = getConfig()
     const libraries = config.libraryDirectories.map(lib => {
         let libraryInfo = {}
@@ -45,7 +61,7 @@ app.get('/libraries', (req, res) => {
 })
 
 app.use('/library/:libraryName/:file', (req, res) => {
-    res.setHeader('Access-Control-Allow-Origin', '*')
+    setHeaders(res)
     const config = getConfig()
     const searchedLibrary = config.libraryDirectories.find(dir => dir.name === req.params.libraryName)
     if (searchedLibrary) {
@@ -54,7 +70,7 @@ app.use('/library/:libraryName/:file', (req, res) => {
 })
 
 app.get('/library/:libraryName', (req, res) => {
-    res.setHeader('Access-Control-Allow-Origin', '*')
+    setHeaders(res)
     const config = getConfig()
     const searchedLibrary = config.libraryDirectories.find(dir => dir.name === req.params.libraryName)
 
@@ -93,5 +109,71 @@ app.get('/library/:libraryName', (req, res) => {
 
     res.json(libraryDetails)
 })
+
+app.get('/create/library', (req, res) => {
+    setHeaders(res)
+    const config = getConfig()
+
+    const locations = config.libraryParents.map(p => p.name)
+    res.json({
+        locations: locations
+    })
+})
+
+app.post('/create/library', cors(corsOptions), (req, res) => {
+    setHeaders(res)
+    const {
+        libraryParent, // from the list (will be the name only)
+        location, //library folder name
+        data //library info (name, description ...)
+    } = req.body
+
+    if (!libraryParent) {
+        res.status(400).send('Missing library parent location')
+        return
+    }
+    if (!location) {
+        res.status(400).send('Missing library folder name')
+        return
+    }
+    if (!data.name) {
+        res.status(400).send('Missing library name')
+        return
+    }
+
+    const created = new Date()
+    const config = getConfig()
+
+    const parentLocation = config.libraryParents.find(lib => lib.name === libraryParent)
+    const fullLibraryPath = path.join(parentLocation.path, location)
+
+    const configData = {
+        name: location,
+        path: fullLibraryPath
+    }
+
+    const updatedConfig = {
+        ...config,
+        libraryDirectories: [...config.libraryDirectories, configData]
+    }
+
+
+    const infoData = {
+        description: data.description ?? '',
+        created: created.toString(),
+        updated: created.toString(),
+        photoCount: 0,
+        videoCount: 0
+    }
+
+    if (!fs.existsSync(fullLibraryPath)){
+        fs.mkdirSync(fullLibraryPath);
+    }
+
+    fs.writeFileSync(path.join(fullLibraryPath, 'info.json'), JSON.stringify(infoData), 'utf-8')
+    fs.writeFileSync(path.join(__dirname, 'user-config.json'), JSON.stringify(updatedConfig), 'utf-8')
+
+    res.status(200).send('done!')
+}) 
 
 app.listen(getConfig().port, () => console.log('serving on port 3000'))

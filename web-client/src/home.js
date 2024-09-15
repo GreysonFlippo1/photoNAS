@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { LibraryView } from './tabs/libraryview'
+import { CreateLibraryModal } from './tabs/create_library_modal'
 
 const config = require('../config.json')
 
@@ -37,16 +38,17 @@ export const Home = () => {
 
     const [libraries, setLibraries] = React.useState(void 0)
     const [selectedLibrary, setLibrary] = React.useState(void 0)
+    const [creatingLibrary, setCreatingLibrary] = React.useState(void 0)
 
     React.useEffect(() => {
-        fetchLibraries(setLibraries)
-    }, [setLibraries])
+        !creatingLibrary && fetchLibraries(setLibraries)
+    }, [setLibraries, creatingLibrary])
 
     return <>
         <div className='header'>
             <div className='headerTitleRow'>
                 <h1>Libraries</h1>
-                <div className='buttonPrimary'>Create Library</div>
+                <div className='buttonPrimary' onClick={() => { setCreatingLibrary(true) }}>Create Library</div>
             </div>
         </div>
         <div className='librariesGrid'>
@@ -73,13 +75,12 @@ export const Home = () => {
                         <h6>Created {selectedLibrary.info.created}</h6>
                         <h6>&#183;</h6>
                         <h6>Updated {selectedLibrary.info.updated ?? selectedLibrary.info.created}</h6>
-                        <h6>&#183;</h6>
-                        <h6>Location {selectedLibrary.path}</h6>
                     </div>
                 </div>
                 <LibraryView libraryName={selectedLibrary.name} serverLocation={config.server_address} photo_formats={config.photo_formats} />
                 </> : ''
         }
         </>
+        { creatingLibrary ? <CreateLibraryModal setCreatingLibrary={setCreatingLibrary} serverLocation={config.server_address} /> : ''}
     </>
 }

@@ -4,6 +4,7 @@
   "main": "index.js",
   "author": "greysonflippo1",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.19.2"
   },
   "scripts": {
