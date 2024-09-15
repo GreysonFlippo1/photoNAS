@@ -23,7 +23,7 @@ const Libraries = (props) => {
         {libraries.map(library => {
             const preview = filterFiles(library.preview, photo_formats)[0]
         
-            return <div key={library.path} className='libraryCard' onClick={() => { setLibrary(library.name) }}>
+            return <div key={library.path} className='libraryCard' onClick={() => { setLibrary(library) }}>
                 {preview && <div className='libraryBG' style={{backgroundImage: `url("${serverLocation}/library/${library.name}/${preview}")`}}></div>}
                 <div className='libraryInfo'>
                     {library.name}
@@ -47,6 +47,9 @@ export const Home = () => {
 
     return <>
         <>
+        <div className='headding'>
+            <h1>Libraries</h1>
+        </div>
         {
             libraries && libraries.length ?
                 <div className='librariesGrid'>
@@ -57,7 +60,16 @@ export const Home = () => {
         <>
         {
             selectedLibrary ? <>
-                <LibraryView libraryName={selectedLibrary} serverLocation={config.server_address} photo_formats={config.photo_formats} />
+                <div className='headding'>
+                    <h1>{selectedLibrary.name}</h1>
+                    <h3>{selectedLibrary.info.description}</h3>
+                    <div className='infoTable'>
+                        <h6>Created {selectedLibrary.info.created}</h6>
+                        <h6>&#183;</h6>
+                        <h6>Updated {selectedLibrary.info.updated ?? selectedLibrary.info.created}</h6>
+                    </div>
+                </div>
+                <LibraryView libraryName={selectedLibrary.name} serverLocation={config.server_address} photo_formats={config.photo_formats} />
                 </> : ''
         }
         </>
