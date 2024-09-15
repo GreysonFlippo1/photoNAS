@@ -42,22 +42,27 @@ export const Home = () => {
     }, [setLibraries])
 
     return <>
-        <>
         <div className='header'>
-            <h1>Libraries</h1>
+            <div className='headerTitleRow'>
+                <h1>Libraries</h1>
+                <div className='buttonPrimary'>Create Library</div>
+            </div>
         </div>
+        <div className='librariesGrid'>
         {
             libraries && libraries.length ?
-                <div className='librariesGrid'>
-                    <Libraries libraries={libraries} setLibraries={setLibraries} fetchLibraries={fetchLibraries} setLibrary={setLibrary} serverLocation={config.server_address} /> 
-                </div> : 'No Libraries Found :('
+                <Libraries libraries={libraries} setLibraries={setLibraries} fetchLibraries={fetchLibraries} setLibrary={setLibrary} serverLocation={config.server_address} /> 
+                : <h1>{`No Libraries Found :(`}</h1>
         }
-        </>
+        </div>
         <>
         {
             selectedLibrary ? <>
                 <div className='header libraryHeader'>
-                    <h1>{selectedLibrary.name}</h1>
+                    <div className='headerTitleRow'>
+                        <h1>{selectedLibrary.name}</h1>
+                        <div className='buttonPrimary'>Edit Library</div>
+                    </div>
                     <h3>{selectedLibrary.info.description}</h3>
                     <div className='infoTable'>
                         <h6>{selectedLibrary.info.photoCount ?? 0} Images</h6>
