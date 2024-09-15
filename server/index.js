@@ -78,8 +78,10 @@ app.get('/library/:libraryName', (req, res) => {
     }
 
     fs.readdirSync(path.join(searchedLibrary.path)).forEach(file => {
-        libraryDetails.files.push(file)
+        filterFile(file, photo_formats) && libraryDetails.files.push(file)
     });
+
+    libraryDetails.info.numberOfPhotos = libraryDetails.files.length
 
     res.json(libraryDetails)
 })

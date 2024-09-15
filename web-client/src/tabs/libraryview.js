@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { filterFiles } from '../common_funtions'
 import { PhotoModal } from './photo_modal'
 
 const fetchLibrary = async (setLibrary, libraryName, server_location) => {
@@ -16,7 +15,7 @@ const Photos = (props) => {
 
     const {files, libraryName, serverLocation, photo_formats, setPhoto} = props
 
-    const photos = filterFiles(files, photo_formats)
+    const photos = files
 
     return <>
         {photos.map(photo => {
