@@ -16,13 +16,13 @@ const fetchLibraries = async (setLibraries) => {
 
 const Libraries = (props) => {
 
-    const {libraries, setLibrary, serverLocation} = props
+    const {libraries, setLibraries, fetchLibraries, setLibrary, serverLocation} = props
 
     return <>
         {libraries.map(library => {
             const preview = library.preview[0]
         
-            return <div key={library.path} className='libraryCard' onClick={() => { setLibrary(library) }}>
+            return <div key={library.path} className='libraryCard' onClick={() => {  fetchLibraries(setLibraries); setLibrary(library) }}>
                 {preview && <div className='libraryBG' style={{backgroundImage: `url("${serverLocation}/library/${library.name}/${preview}")`}}></div>}
                 <div className='libraryInfo'>
                     {library.name}
@@ -38,7 +38,7 @@ export const Home = () => {
     const [selectedLibrary, setLibrary] = React.useState(void 0)
 
     React.useEffect(() => {
-        fetchLibraries(setLibraries, setLibrary)
+        fetchLibraries(setLibraries)
     }, [setLibraries])
 
     return <>
@@ -49,7 +49,7 @@ export const Home = () => {
         {
             libraries && libraries.length ?
                 <div className='librariesGrid'>
-                    <Libraries libraries={libraries} setLibrary={setLibrary} serverLocation={config.server_address} /> 
+                    <Libraries libraries={libraries} setLibraries={setLibraries} fetchLibraries={fetchLibraries} setLibrary={setLibrary} serverLocation={config.server_address} /> 
                 </div> : 'No Libraries Found :('
         }
         </>
@@ -60,6 +60,10 @@ export const Home = () => {
                     <h1>{selectedLibrary.name}</h1>
                     <h3>{selectedLibrary.info.description}</h3>
                     <div className='infoTable'>
+                        <h6>{selectedLibrary.info.photoCount ?? 0} Images</h6>
+                        <h6>&#183;</h6>
+                        <h6>{selectedLibrary.info.videoCount ?? 0} Videos</h6>
+                        <h6>&#183;</h6>
                         <h6>Created {selectedLibrary.info.created}</h6>
                         <h6>&#183;</h6>
                         <h6>Updated {selectedLibrary.info.updated ?? selectedLibrary.info.created}</h6>

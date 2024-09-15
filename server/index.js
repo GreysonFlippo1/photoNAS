@@ -69,19 +69,27 @@ app.get('/library/:libraryName', (req, res) => {
         console.log(`warning: library "${searchedLibrary}" lacks info.json file`)
     } 
 
+    const files = []
+
+    fs.readdirSync(path.join(searchedLibrary.path)).forEach(file => {
+        filterFile(file, photo_formats) && files.push(file)
+    });
+
+    libraryInfo.photoCount = files.length
+
+    try {
+        fs.writeFileSync(path.join(searchedLibrary.path, 'info.json'), JSON.stringify(libraryInfo), 'utf-8')
+    } catch (e) {
+        return console.log('failed to auto-update library info')
+    }
+
     const libraryDetails = {
         info: {
             ...searchedLibrary,
             ...libraryInfo
         },
-        files: [],
+        files: [...files],
     }
-
-    fs.readdirSync(path.join(searchedLibrary.path)).forEach(file => {
-        filterFile(file, photo_formats) && libraryDetails.files.push(file)
-    });
-
-    libraryDetails.info.numberOfPhotos = libraryDetails.files.length
 
     res.json(libraryDetails)
 })
