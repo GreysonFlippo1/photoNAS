@@ -24,6 +24,7 @@ const Libraries = (props) => {
         
             return <div key={library.path} className='libraryCard' onClick={() => {  fetchLibraries(setLibraries); setLibrary(library) }}>
                 {preview && <div className='libraryBG' style={{backgroundImage: `url("${serverLocation}/library/${library.name}/${preview}")`}}></div>}
+                <div className='libraryGradient'></div>
                 <div className='libraryInfo'>
                     {library.name}
                 </div>
