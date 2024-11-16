@@ -56,7 +56,6 @@ export const CreateLibraryModal = (props) => {
     }, [setLibraryOptions])
 
     return <div className='modalContainer'>
-        <div className='modalBG'></div>
         <div className='modalForm'>
             {
                 libraryOptions ? <>
