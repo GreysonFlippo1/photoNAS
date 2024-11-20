@@ -55,6 +55,8 @@ app.get('/libraries', (req, res) => {
                 }
             });
         }
+        const location = config.libraryParents.filter(p => lib.path.startsWith(p.path))
+        lib.location = location
         return {...lib, info: {...libraryInfo}, preview}
     })
     res.json(libraries)
@@ -75,7 +77,7 @@ app.get('/library/:libraryName', (req, res) => {
     const searchedLibrary = config.libraryDirectories.find(dir => dir.name === req.params.libraryName)
 
     if (!searchedLibrary) {
-        res.status(404).send('Library not found, please double check the library name is correct')
+        res.status(404).send('Library not found, please ensure the library name is correct')
     }
 
     let libraryInfo = {}
@@ -98,6 +100,9 @@ app.get('/library/:libraryName', (req, res) => {
     } catch (e) {
         return console.log('failed to auto-update library info')
     }
+
+    const location = config.libraryParents.filter(p => searchedLibrary.path.startsWith(p.path))
+    searchedLibrary.location = location
 
     const libraryDetails = {
         info: {
