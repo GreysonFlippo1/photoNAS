@@ -256,8 +256,14 @@ h6 {
     position: absolute;
     top: 0px;
     right: 0px;
-    width: 50px;
-    height: 50px;
+    width: 30px;
+    height: 30px;
+    margin: 10px;
     /* border: 1px solid white; */
     border-radius: 50%;
+    cursor: pointer;
+}
+
+.infoIcon:hover {
+    filter: brightness(125%);
 }
