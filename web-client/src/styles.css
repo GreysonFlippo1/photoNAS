@@ -18,6 +18,7 @@ body {
     backdrop-filter: blur(10px);
     box-shadow: 0px 10px 5px rgba(0,0,0,0.2);
     margin-bottom: 20px;
+    padding-top: 0;
 }
 
 .buttonPrimary {
@@ -253,17 +254,29 @@ h6 {
 }
 
 .infoIcon {
+    /* border: 1px solid white; */
+    border-radius: 50%;
+    cursor: pointer;
+    text-transform: lowercase;
+}
+
+.infoIcon:hover {
+    filter: brightness(133%);
+}
+
+.photoViewer > .infoIcon {
     position: absolute;
     top: 0px;
     right: 0px;
     width: 30px;
     height: 30px;
     margin: 10px;
-    /* border: 1px solid white; */
-    border-radius: 50%;
-    cursor: pointer;
 }
 
-.infoIcon:hover {
-    filter: brightness(133%);
+.infoTable > h6 > .infoIcon {
+    position: relative;
+    top: -5px;
+    left: -5px;
+    width: 20px;
+    height: 20px;
 }

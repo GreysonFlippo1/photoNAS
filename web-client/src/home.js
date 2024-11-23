@@ -2,6 +2,7 @@ import * as React from 'react'
 import { LibraryView } from './tabs/libraryview'
 import { CreateLibraryModal } from './tabs/create_library_modal'
 import { EditLibraryModal } from './tabs/edit_library_modal'
+import InfoIcon from './assets/info.svg'
 
 const config = require('../config.json')
 
@@ -73,10 +74,12 @@ export const Home = () => {
             selectedLibrary ? <>
                 <div className='header libraryHeader'>
                     <div className='headerTitleRow'>
-                        <h1>{selectedLibrary.name}</h1>
+                        <h1>
+                            {selectedLibrary.name}
+                        </h1>
                         <div className='buttonPrimary' onClick={() => { setEditingLibrary(true) }}>Edit Library</div>
                     </div>
-                    <h3>{selectedLibrary.info.description}</h3>
+                    <h3 style={{marginTop: 0}}>{selectedLibrary.info.description}</h3>
                     <div className='infoTable'>
                         <h6>{selectedLibrary.info.photoCount ?? 0} Images</h6>
                         <h6>&#183;</h6>
@@ -85,6 +88,8 @@ export const Home = () => {
                         <h6>Created {selectedLibrary.info.created}</h6>
                         <h6>&#183;</h6>
                         <h6>Updated {selectedLibrary.info.updated ?? selectedLibrary.info.created}</h6>
+                        <h6>&#183;</h6>
+                        <h6><InfoIcon /></h6>
                     </div>
                 </div>
                 <LibraryView libraryName={selectedLibrary.name} serverLocation={config.server_address} photo_formats={config.photo_formats} />
