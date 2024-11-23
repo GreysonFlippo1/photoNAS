@@ -138,7 +138,7 @@ h6 {
 }
 
 .libraryCard:hover > .libraryBG{
-    filter: brightness(80%);
+    filter: brightness(120%);
     box-shadow: 0px 3px 20px #111;
 }
 
@@ -265,5 +265,5 @@ h6 {
 }
 
 .infoIcon:hover {
-    filter: brightness(125%);
+    filter: brightness(133%);
 }
