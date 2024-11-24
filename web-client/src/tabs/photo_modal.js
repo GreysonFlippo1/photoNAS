@@ -1,5 +1,6 @@
 import * as React from 'react'
 import InfoIcon from '../assets/info.svg'
+import ExitIcon from '../assets/exit.svg'
 
 export const PhotoModal = (props) => {
 
@@ -20,6 +21,7 @@ export const PhotoModal = (props) => {
                     </div> :
                     void 0
             }
+            <ExitIcon callback={() => { setPhoto(void 0) }}/>
             <InfoIcon callback={() => { setShowingInfo(!showingInfo) }}/>
         </div>
     </div>

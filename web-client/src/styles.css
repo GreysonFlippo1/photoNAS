@@ -257,16 +257,24 @@ h6 {
     margin-top: 50px;
 }
 
-.infoIcon {
-    /* border: 1px solid white; */
+.icon {
     border-radius: 50%;
     cursor: pointer;
     text-transform: lowercase;
     backdrop-filter: blur(10px);
 }
 
-.infoIcon:hover {
+.icon:hover {
     filter: brightness(133%);
+}
+
+.photoViewer > .exitIcon {
+    position: absolute;
+    top: 0px;
+    right: 30px;
+    width: 30px;
+    height: 30px;
+    margin: 10px;
 }
 
 .photoViewer > .infoIcon {
