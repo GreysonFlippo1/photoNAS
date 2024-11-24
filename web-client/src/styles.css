@@ -6,6 +6,12 @@ body {
     margin: 8px 0px;
 }
 
+.prevent-select {
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}
+
 .header {
     padding: 20px;
     background-color: #223;
@@ -219,14 +225,12 @@ h6 {
 .photoViewer {
     width: 70%;
     height: 70%;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: 50% 50%;
     background-color: #223;
     position: relative;
     z-index: 11;
     border-radius: 10px;
     box-shadow: 0px 3px 20px #111;
+    display: flex;
 }
 
 .modalForm {
@@ -258,6 +262,7 @@ h6 {
     border-radius: 50%;
     cursor: pointer;
     text-transform: lowercase;
+    backdrop-filter: blur(10px);
 }
 
 .infoIcon:hover {
@@ -279,4 +284,44 @@ h6 {
     left: -5px;
     width: 20px;
     height: 20px;
+}
+
+.photoContainer {
+    width: calc(100% - 40px);
+    height: calc(100% - 40px);
+    background-color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 0px 10px #111;
+}
+
+.photoContainer > img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.photoInfo {
+    width: 700px;
+    height: 100%;
+    margin: 40px;
+}
+
+@media only screen and (max-width: 1400px) {
+
+    .photoViewer {
+        flex-direction: column-reverse;
+        width: calc(100% - 40px);
+        height: calc(100% - 40px);
+        justify-content: flex-end;
+        overflow: hidden;
+    }
+
+    .photoInfo {
+        width: calc(100% - 80px);
+        min-height: 300px;
+        height: 300px;
+    }
 }

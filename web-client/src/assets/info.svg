@@ -1,8 +1,10 @@
 import * as React from 'react'
 
-export default function InfoIcon() {
+export default function InfoIcon(props) {
+    const { callback } = props
+
     return (
-        <svg className='infoIcon' viewBox='0 0 50 50'>
+        <svg className='infoIcon prevent-select' viewBox='0 0 50 50' onClick={callback}>
             <defs>
                 <linearGradient id="Gradient" x1="0" x2="0" y1="0" y2="1">
                     <stop stopColor='rgb(100, 100, 249)' offset="0%" />

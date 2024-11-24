@@ -23,7 +23,7 @@ const Photos = (props) => {
                     key={photo}
                     className='photoSquare'
                     style={{backgroundImage: `url("${serverLocation}/library/${libraryName}/${photo}")`}}
-                    onClick={() => {setPhoto(`url("${serverLocation}/library/${libraryName}/${photo}")`)}}>
+                    onClick={() => {setPhoto(`${serverLocation}/library/${libraryName}/${photo}`)}}>
                 </div>
         })}
     </>
