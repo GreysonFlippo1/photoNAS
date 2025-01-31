@@ -135,7 +135,7 @@ h6 {
 
 .libraryCard {
     max-width: 100%;
-    min-width: 210px;
+    min-width: 310px;
     height: 120px;
     background-color: #111;
     margin: 10px;
@@ -181,7 +181,7 @@ h6 {
     z-index: 2;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     text-transform: uppercase;
-    font-size: 30px;
+    font-size: 20px;
     text-shadow: 1px 1px 3px #223;
     margin: 10px 20px;
 }
