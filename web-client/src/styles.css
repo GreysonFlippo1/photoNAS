@@ -135,8 +135,8 @@ h6 {
 
 .libraryCard {
     max-width: 100%;
-    min-width: 420px;
-    height: 250px;
+    min-width: 210px;
+    height: 120px;
     background-color: #111;
     margin: 10px;
     border-radius: 10px;
