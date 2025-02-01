@@ -65,12 +65,12 @@ export const EditLibraryModal = (props) => {
                 <h4>Change location</h4>
                 {
                     libraryOptions.locations.map(location => {
-                    return <div className={`buttonPrimary ${selectedParent === location ? 'blueButton' : ''}`} onClick={() => { selectParent(location) }} key={location}>
+                    return <div className={`buttonPrimary ${selectedParent === location ? 'greenButton' : ''}`} onClick={() => { selectParent(location) }} key={location}>
                             {location}
                         </div>
                     })
                 }
-                {/* <div className={`buttonPrimary ${selectedParent === 'newParent' ? 'blueButton' : ''}`} onClick={() => { selectParent('newParent') }}>
+                {/* <div className={`buttonPrimary ${selectedParent === 'newParent' ? 'greenButton' : ''}`} onClick={() => { selectParent('newParent') }}>
                     + Create New Location
                 </div> */}
                 <h4>Library Folder</h4>
@@ -95,7 +95,7 @@ export const EditLibraryModal = (props) => {
                     })
                 }}></textarea>
                 <div className='modalBottomButtons'>
-                    <div className='buttonPrimary blueButton' onClick={() => { createLibrary({...inputtedInformation, libraryParent: selectedParent}, serverLocation, setCreatingLibrary) }}>Save Changes</div>
+                    <div className='buttonPrimary greenButton' onClick={() => { createLibrary({...inputtedInformation, libraryParent: selectedParent}, serverLocation, setCreatingLibrary) }}>Save Changes</div>
                     <div className='buttonPrimary redButton' onClick={() => { setEditingLibrary(void 0) }}>Cancel</div>
                 </div>
                 </> : ''

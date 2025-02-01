@@ -59,7 +59,7 @@ export const Home = () => {
         <div className='header'>
             <div className='headerTitleRow'>
                 <h1>Libraries</h1>
-                <div className='buttonPrimary' onClick={() => { setCreatingLibrary(true) }}>Create Library</div>
+                <div className='buttonPrimary greenButton' onClick={() => { setCreatingLibrary(true) }}>Create Library</div>
             </div>
         </div>
         <div className='librariesGrid'>
