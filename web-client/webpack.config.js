@@ -19,6 +19,7 @@ module.exports = {
     allowedHosts: 'all',
     static: './dist',
     host: 'photonas.io',
+    historyApiFallback: true
   },
   optimization: {
     runtimeChunk: 'single',
