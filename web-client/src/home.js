@@ -79,7 +79,7 @@ export const Home = () => {
                             {selectedLibrary.name}
                             {/* <EditIcon /> */}
                         </h1>
-                        {/* <div className='buttonPrimary' onClick={() => { setEditingLibrary(true) }}>Edit Library</div> */}
+                        <div className='buttonPrimary' onClick={() => { setEditingLibrary(true) }}>Edit Library</div>
                     </div>
                     <h3 style={{marginTop: 0}}>{selectedLibrary.info.description}</h3>
                     <div className='infoTable'>

@@ -41,7 +41,6 @@ const createLibrary = async (libraryOptions, server_location, setEditingLibrary)
 export const EditLibraryModal = (props) => {
 
     const { setEditingLibrary, serverLocation, selectedLibrary } = props
-    console.log(selectedLibrary)
 
     const [libraryOptions, setLibraryOptions] = React.useState(void 0)
     const [selectedParent, selectParent] = React.useState(selectedLibrary.location.name)
@@ -55,7 +54,6 @@ export const EditLibraryModal = (props) => {
     React.useEffect(() => {
         fetchLibraryOptions(setLibraryOptions, serverLocation)
     }, [setLibraryOptions])
-    console.log(libraryOptions?.locations)
 
     return <div className='modalContainer'>
         <div className='modalForm'>

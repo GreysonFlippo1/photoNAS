@@ -37,8 +37,6 @@ addEventListener('resize', (event) => {
     }
 });
 
-console.log(router)
-
 // Render your React component instead
 const root = createRoot(document.getElementById('root'))
 root.render(<RouterProvider router={router} />)
