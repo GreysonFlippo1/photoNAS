@@ -3,6 +3,7 @@ import { LibraryView } from './tabs/libraryview'
 import { CreateLibraryModal } from './tabs/create_library_modal'
 import { EditLibraryModal } from './tabs/edit_library_modal'
 import InfoIcon from './assets/info.svg'
+import EditIcon from './assets/edit.svg'
 
 const config = require('../config.json')
 
@@ -76,8 +77,9 @@ export const Home = () => {
                     <div className='headerTitleRow'>
                         <h1>
                             {selectedLibrary.name}
+                            {/* <EditIcon /> */}
                         </h1>
-                        <div className='buttonPrimary' onClick={() => { setEditingLibrary(true) }}>Edit Library</div>
+                        {/* <div className='buttonPrimary' onClick={() => { setEditingLibrary(true) }}>Edit Library</div> */}
                     </div>
                     <h3 style={{marginTop: 0}}>{selectedLibrary.info.description}</h3>
                     <div className='infoTable'>
