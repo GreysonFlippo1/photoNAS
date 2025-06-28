@@ -1,0 +1,18 @@
+import * as React from 'react'
+
+export default function ResizeIcon(props) {
+    const { callback } = props
+
+    return (
+        <svg className='resizeIcon prevent-select icon' viewBox='0 0 50 50' onClick={callback} style={{fontWeight: 'bold'}}>
+            <defs>
+                <linearGradient id="Gradient" x1="0" x2="0" y1="0" y2="1">
+                    <stop stopColor='rgb(100, 100, 249)' offset="0%" />
+                    <stop stopColor='rgb(130, 130, 255)' offset="100%" />
+                </linearGradient>
+            </defs>
+            <circle cx="25" cy="25" r="18" strokeWidth="2" fill="none" stroke="url(#Gradient)" />
+            <text x="25" y="26" fontFamily="Courier New, monospace" textAnchor='middle' fontSize="23px" alignmentBaseline="central" fill="url(#Gradient)" fontWeight="100">□</text>
+        </svg>
+    )
+}

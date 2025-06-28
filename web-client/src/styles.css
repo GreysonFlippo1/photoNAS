@@ -285,6 +285,15 @@ h6 {
 .photoViewer > .exitIcon {
     position: absolute;
     top: 0px;
+    left: 0px;
+    width: 30px;
+    height: 30px;
+    margin: 10px;
+}
+
+.photoViewer > .resizeIcon {
+    position: absolute;
+    top: 0px;
     right: 30px;
     width: 30px;
     height: 30px;
