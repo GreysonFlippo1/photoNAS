@@ -41,11 +41,12 @@ export const LibraryView = (props) => {
     }, [setLibrary, libraryName, serverLocation])
 
     const loading = library?.info.name !== libraryName
+    const photos = library?.info?.photos ? Object.keys(library.info.photos) : []
 
     return <>
         <div className='photoGrid' style={{paddingLeft: ((window.innerWidth - 20) % 220) / 2 + 10 + 'px'}}>
         {
-            (library && !loading) ? <Photos files={library.files} libraryName={libraryName} serverLocation={serverLocation} photo_formats={photo_formats} setPhoto={setPhoto} /> : ''
+            (library && !loading) ? <Photos files={photos} libraryName={libraryName} serverLocation={serverLocation} photo_formats={photo_formats} setPhoto={setPhoto} /> : ''
         }
         </div>
         {

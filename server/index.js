@@ -2,13 +2,12 @@ const express = require('express')
 const path = require('path')
 const fs = require('fs')
 const cors = require('cors')
-const postgres = require('postgres')
 const app = express()
+
+const scanner = require('./scanner')
 
 app.use(cors())
 app.use(express.json())
-
-const sql = postgres({ /* options */ })
 
 const getConfig = () => {
     try {
@@ -83,26 +82,15 @@ app.get('/library/:libraryName', (req, res) => {
         res.status(404).send('Library not found, please ensure the library name is correct')
     }
 
+    scanner(searchedLibrary.path)
+
     let libraryInfo = {}
     try {
         libraryInfo = require(path.join(searchedLibrary.path, 'info.json'))
     } catch (err) {
-        console.log(`warning: library "${searchedLibrary}" lacks info.json file`)
+        console.log(`error: library "${req.params.libraryName}" lacks info.json file`)
+        res.status(404).send('Library not found, please ensure the library name is correct')
     } 
-
-    const files = []
-
-    fs.readdirSync(path.join(searchedLibrary.path)).forEach(file => {
-        filterFile(file, photo_formats) && files.push(file)
-    });
-
-    libraryInfo.photoCount = files.length
-
-    try {
-        fs.writeFileSync(path.join(searchedLibrary.path, 'info.json'), JSON.stringify(libraryInfo), 'utf-8')
-    } catch (e) {
-        return console.log('failed to auto-update library info')
-    }
 
     const location = config.libraryParents.filter(p => searchedLibrary.path.startsWith(p.path))
     searchedLibrary.location = location
@@ -111,8 +99,7 @@ app.get('/library/:libraryName', (req, res) => {
         info: {
             ...searchedLibrary,
             ...libraryInfo
-        },
-        files: [...files],
+        }
     }
 
     res.json(libraryDetails)
@@ -180,6 +167,8 @@ app.post('/create/library', cors(corsOptions), (req, res) => {
 
     fs.writeFileSync(path.join(fullLibraryPath, 'info.json'), JSON.stringify(infoData), 'utf-8')
     fs.writeFileSync(path.join(__dirname, 'user-config.json'), JSON.stringify(updatedConfig), 'utf-8')
+
+    scanner(fullLibraryPath)
 
     res.status(200).send('done!')
 }) 
