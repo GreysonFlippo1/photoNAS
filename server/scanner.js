@@ -21,7 +21,11 @@ const scanLibrary = (directory, options = {}) => {
         libraryInfo = require(path.join(directory, 'info.json'))
     } catch (err) {
         return console.log(`error: ${directory} is not a library`)
-    } 
+    }
+
+    if (!options.force && new Date() - new Date(libraryInfo.updated) < scanInverval) {
+        return console.log('skipping scan')
+    }
 
     const files = []
 
@@ -40,6 +44,10 @@ const scanLibrary = (directory, options = {}) => {
         if (!libraryInfo.photos[file]) {
             libraryInfo.photos[file] = {}
         }
+        console.log(deleteList)
+        Object.keys(deleteList).forEach(deletedFile => {
+            delete libraryInfo.photos[deletedFile]
+        })
     })
 
     try {

@@ -82,7 +82,7 @@ app.get('/library/:libraryName', (req, res) => {
         res.status(404).send('Library not found, please ensure the library name is correct')
     }
 
-    scanner(searchedLibrary.path)
+    scanner(searchedLibrary.path, {force: true})
 
     let libraryInfo = {}
     try {
