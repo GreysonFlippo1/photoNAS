@@ -4,7 +4,7 @@ const fs = require('fs')
 const cors = require('cors')
 const app = express()
 
-const scanner = require('./scanner')
+const scanner = require('./utils/scanner')
 
 app.use(cors())
 app.use(express.json())
