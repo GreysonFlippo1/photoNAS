@@ -41,12 +41,19 @@ const scanLibrary = (directory, options = {}) => {
     }
 
     files.forEach(file => {
+        const removelist = {}
+        Object.keys(libraryInfo.photos).forEach(oldFile => {
+            removelist[oldFile]
+        })
+
         if (!libraryInfo.photos[file]) {
             libraryInfo.photos[file] = {}
+        } else if(libraryInfo.photos[file]) {
+            delete removelist[file]
         }
-        console.log(deleteList)
-        Object.keys(deleteList).forEach(deletedFile => {
-            delete libraryInfo.photos[deletedFile]
+
+        Object.keys(removelist).forEach(oldFile => {
+            delete libraryInfo.photos[oldFile]
         })
     })
 
