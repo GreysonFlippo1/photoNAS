@@ -82,7 +82,7 @@ app.get('/library/:libraryName', (req, res) => {
         res.status(404).send('Library not found, please ensure the library name is correct')
     }
 
-    scanner(searchedLibrary.path, {force: false})
+    scanner(searchedLibrary.path, {force: true})
 
     let libraryInfo = {}
     try {
@@ -168,7 +168,7 @@ app.post('/create/library', cors(corsOptions), (req, res) => {
     fs.writeFileSync(path.join(fullLibraryPath, 'info.json'), JSON.stringify(infoData), 'utf-8')
     fs.writeFileSync(path.join(__dirname, 'user-config.json'), JSON.stringify(updatedConfig), 'utf-8')
 
-    scanner(fullLibraryPath)
+    scanner(fullLibraryPath, {force: true})
 
     res.status(200).send('done!')
 }) 

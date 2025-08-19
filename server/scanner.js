@@ -9,7 +9,10 @@ const filterFile = (file, formats) => {
 }
 
 /*
-scans existing library for new photos
+scans existing library for:
+ - new photos
+ - removed photos
+ - updated photo metadata
 
 options:
     recursive: bool - checks for photos in subdirectories
@@ -50,6 +53,8 @@ const scanLibrary = (directory, options = {}) => {
             libraryInfo.photos[file] = {}
         } else if(libraryInfo.photos[file]) {
             delete removelist[file]
+            let metadata
+            libraryInfo.photos[file].metadata = metadata
         }
 
         Object.keys(removelist).forEach(oldFile => {
