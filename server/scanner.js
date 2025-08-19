@@ -63,7 +63,7 @@ const scanLibrary = (directory, options = {}) => {
         return console.log('failed to auto-update library info')
     }
 
-    return console.log('scan completed')
+    return console.log('scan completed: ', libraryInfo.updated)
 }
 
 module.exports = scanLibrary
