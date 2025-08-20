@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const {getConfig, setHeaders} = require('./utils/configurator')
+const {getConfig} = require('./utils/configurator')
 
 app.use(express.json())
 

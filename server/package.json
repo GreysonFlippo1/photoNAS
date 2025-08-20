@@ -1,14 +1,22 @@
 {
-  "name": "photoNAS server",
+  "name": "photonasserver",
   "version": "0.0.1",
   "main": "index.js",
   "author": "greysonflippo1",
   "type": "commonjs",
+  "eslintConfig": {},
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.19.2"
   },
   "scripts": {
     "start": "node index.js"
+  },
+  "devDependencies": {
+    "@eslint/css": "^0.10.0",
+    "@eslint/js": "^9.33.0",
+    "@eslint/json": "^0.13.1",
+    "eslint": "^9.33.0",
+    "globals": "^16.3.0"
   }
 }
