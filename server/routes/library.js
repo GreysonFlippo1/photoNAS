@@ -31,8 +31,8 @@ router.get('/:libraryName', (req, res) => {
     let libraryInfo = {}
     try {
         libraryInfo = require(path.join(searchedLibrary.path, 'info.json'))
-    } catch (err) {
-        console.log(`error: library "${req.params.libraryName}" lacks info.json file`)
+    } catch (error) {
+        console.log(`error: library "${req.params.libraryName}" lacks info.json file:`, error)
         res.status(404).send('Library not found, please ensure the library name is correct')
     } 
 

@@ -19,8 +19,8 @@ router.get('/', (req, res) => {
 
         try {
             libraryInfo = require(path.join(lib.path, 'info.json'))
-        } catch (err) {
-            console.log(`warning: library "${lib.name}" lacks info.json file`)
+        } catch (error) {
+            console.log(`warning: library "${lib.name}" lacks info.json file:`, error)
         }
         if (req.query.preview) {
             fs.readdirSync(path.join(lib.path)).forEach(file => {

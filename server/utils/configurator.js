@@ -6,8 +6,8 @@ const getConfig = () => {
     try {
         return require(path.join(__dirname, '../user-config.json')) // change this directory
     }
-    catch (e) {
-        console.error('No configuration file')
+    catch (error) {
+        console.error('No configuration file: ', error)
     }
 }
 

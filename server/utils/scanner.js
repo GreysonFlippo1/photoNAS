@@ -18,8 +18,8 @@ const scanLibrary = (directory, options = {}) => {
     let libraryInfo = {}
     try {
         libraryInfo = require(path.join(directory, 'info.json'))
-    } catch (err) {
-        return console.log(`error: ${directory} is not a library`)
+    } catch (error) {
+        return console.log(`error: ${directory} is not a library:`, error)
     }
 
     if (!options.force && new Date() - new Date(libraryInfo.updated) < scanInverval) {
@@ -60,8 +60,8 @@ const scanLibrary = (directory, options = {}) => {
 
     try {
         fs.writeFileSync(path.join(directory, 'info.json'), JSON.stringify(libraryInfo), 'utf-8')
-    } catch (e) {
-        return console.log('failed to auto-update library info')
+    } catch (error) {
+        return console.log('failed to auto-update library info:', error)
     }
 
     return console.log('scan completed: ', libraryInfo.updated)
