@@ -1,12 +1,8 @@
 const path = require('path')
 const fs = require('fs')
+const {filterFile, photo_formats} = require('./configurator')
 
-const photo_formats = ["png", "jpg", "gif", "heic", "jpeg", "webp"]
 const scanInverval = 1000 * 60 * 60 * 24 // 1 day
-
-const filterFile = (file, formats) => {
-    return formats.includes(`${file.split('.').slice(-1)}`.toLowerCase())
-}
 
 /*
 scans existing library for:

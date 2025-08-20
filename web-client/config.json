@@ -1,4 +1,4 @@
 {
     "server_address": "http://photonas.io:3000",
-    "photo_formats": ["png", "jpg", "gif", "heic"]
+    "photo_formats": ["png", "jpg", "gif", "heic", "jpeg", "webp"]
 }
