@@ -53,8 +53,8 @@ const scanLibrary = (directory, options = {}) => {
             libraryInfo.photos[file] = {}
         } else if(libraryInfo.photos[file]) {
             delete removelist[file]
-            let metadata
-            libraryInfo.photos[file].metadata = metadata
+            // const metadata = {} // store exif metadata
+            // libraryInfo.photos[file].metadata = metadata
         }
 
         Object.keys(removelist).forEach(oldFile => {
