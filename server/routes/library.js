@@ -2,7 +2,7 @@ const express = require('express')
 const path = require('path')
 const router = express.Router()
 
-const scanner = require('../utils/scanner')
+const {scanLibrary} = require('../utils/scanner')
 const {
     getConfig,
     setHeaders,
@@ -26,7 +26,7 @@ router.get('/:libraryName', (req, res) => {
         res.status(404).send('Library not found, please ensure the library name is correct')
     }
 
-    scanner(searchedLibrary.path)
+    scanLibrary(searchedLibrary.path)
 
     let libraryInfo = {}
     try {

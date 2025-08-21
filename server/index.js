@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const {getConfig} = require('./utils/configurator')
+const {autoScan} = require('./utils/scanner')
 
 app.use(express.json())
 
@@ -13,5 +14,7 @@ const create = require('./routes/create')
 app.use('/libraries', libraries)
 app.use('/library', library)
 app.use('/create', create)
+
+autoScan()
 
 app.listen(getConfig().port, () => console.log('serving on port 3000'))

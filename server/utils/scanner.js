@@ -1,8 +1,8 @@
 const path = require('path')
 const fs = require('fs')
-const {filterFile, photo_formats} = require('./configurator')
+const {getConfig, filterFile, photo_formats} = require('./configurator')
 
-const scanInverval = 1000 * 60 * 60 * 24 // 1 day
+const scanIntervalDefault = 1000 * 60 * 60 * 24 // 1 day default
 
 /*
 scans existing library for:
@@ -14,6 +14,7 @@ options:
     force: bool - scan regardless of last scan time
 */
 const scanLibrary = (directory, options = {}) => {
+    const config = getConfig()
     let libraryInfo = {}
     try {
         libraryInfo = require(path.join(directory, 'info.json'))
@@ -21,7 +22,9 @@ const scanLibrary = (directory, options = {}) => {
         return console.log(`error: ${directory} is not a library:`, error)
     }
 
-    if (!options.force && new Date() - new Date(libraryInfo.updated) < scanInverval) {
+    const scanInterval = config.autoScan ?? scanIntervalDefault
+
+    if (!options.force && new Date() - new Date(libraryInfo.updated) < scanInterval) {
         return void 0;
     }
 
@@ -64,7 +67,21 @@ const scanLibrary = (directory, options = {}) => {
         return console.log('failed to auto-update library info:', error)
     }
 
-    return console.log('scan completed: ', libraryInfo.updated)
+    return console.log('scan completed: ', directory, libraryInfo.updated)
 }
 
-module.exports = scanLibrary
+const autoScan = () => {
+    const {autoScan, libraryDirectories} = getConfig()
+    const scanInterval = autoScan ?? scanIntervalDefault
+
+    libraryDirectories.forEach(directory => {
+        scanLibrary(directory.path, {force: true})
+    })
+
+    setTimeout(() => { autoScan() }, scanInterval)
+}
+
+module.exports = {
+    scanLibrary,
+    autoScan
+}
