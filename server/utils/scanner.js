@@ -23,7 +23,7 @@ const scanLibrary = (directory, options = {}) => {
     }
 
     if (!options.force && new Date() - new Date(libraryInfo.updated) < scanInverval) {
-        return console.log('skipping scan')
+        return void 0;
     }
 
     const files = []
