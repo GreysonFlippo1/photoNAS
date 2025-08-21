@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
     const config = getConfig()
     const libraries = config.libraryDirectories.map(lib => {
         let libraryInfo = {}
-        const preview = []
+        let preview = []
 
         try {
             libraryInfo = require(path.join(lib.path, 'info.json'))
@@ -23,11 +23,11 @@ router.get('/', (req, res) => {
             console.log(`warning: library "${lib.name}" lacks info.json file:`, error)
         }
         if (req.query.preview) {
-            fs.readdirSync(path.join(lib.path)).forEach(file => {
-                if (preview.length < req.query.preview && filterFile(file, photo_formats)) {
-                    preview.push(file)
-                }
-            });
+            let photos = Object.keys(libraryInfo.photos)
+            if (photos.length) {
+                const previewLength = photos.length > req.query.preview ? req.query.preview : photos.length
+                preview = photos.slice( -1 * previewLength )
+            }
         }
         const location = config.libraryParents.filter(p => lib.path.startsWith(p.path))
         lib.location = location

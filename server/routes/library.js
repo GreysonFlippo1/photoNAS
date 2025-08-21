@@ -26,7 +26,7 @@ router.get('/:libraryName', (req, res) => {
         res.status(404).send('Library not found, please ensure the library name is correct')
     }
 
-    scanner(searchedLibrary.path, {force: true})
+    scanner(searchedLibrary.path)
 
     let libraryInfo = {}
     try {
