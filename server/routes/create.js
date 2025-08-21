@@ -4,7 +4,7 @@ const fs = require('fs')
 const cors = require('cors')
 const router = express.Router()
 
-const scanner = require('../utils/scanner')
+const {scanLibrary} = require('../utils/scanner')
 const {
     getConfig,
     setHeaders,
@@ -76,7 +76,7 @@ router.post('/library', cors(corsOptions), (req, res) => {
     fs.writeFileSync(path.join(fullLibraryPath, 'info.json'), JSON.stringify(infoData), 'utf-8')
     fs.writeFileSync(path.join(__dirname, 'user-config.json'), JSON.stringify(updatedConfig), 'utf-8')
 
-    scanner(fullLibraryPath, {force: true})
+    scanLibrary(fullLibraryPath, {force: true})
 
     res.status(200).send('done!')
 }) 
