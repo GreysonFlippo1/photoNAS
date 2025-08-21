@@ -11,7 +11,6 @@ scans existing library for:
  - updated photo metadata
 
 options:
-    recursive: bool - checks for photos in subdirectories
     force: bool - scan regardless of last scan time
 */
 const scanLibrary = (directory, options = {}) => {
@@ -27,8 +26,9 @@ const scanLibrary = (directory, options = {}) => {
     }
 
     const files = []
+    const recursive = !!libraryInfo.includeSubDirectories
 
-    fs.readdirSync(path.join(directory)).forEach(file => {
+    fs.readdirSync(path.join(directory), {recursive}).forEach(file => {
         filterFile(file, photo_formats) && files.push(file)
     });
 
