@@ -1,13 +1,11 @@
 const express = require('express')
 const path = require('path')
-const fs = require('fs')
+const {readFileSync} = require('fs')
 const router = express.Router()
 
 const {
     getConfig,
     setHeaders,
-    filterFile,
-    photo_formats
 } = require('../utils/configurator')
 
 router.get('/', (req, res) => {
@@ -18,7 +16,7 @@ router.get('/', (req, res) => {
         let preview = []
 
         try {
-            libraryInfo = require(path.join(lib.path, 'info.json'))
+            libraryInfo = JSON.parse(readFileSync(path.join(lib.path, 'info.json'), {encoding: 'utf-8'}))
         } catch (error) {
             console.log(`warning: library "${lib.name}" lacks info.json file:`, error)
         }
@@ -29,6 +27,7 @@ router.get('/', (req, res) => {
                 preview = photos.slice( -1 * previewLength )
             }
         }
+        delete libraryInfo.photos
         const location = config.libraryParents.filter(p => lib.path.startsWith(p.path))
         lib.location = location
         return {...lib, info: {...libraryInfo}, preview}

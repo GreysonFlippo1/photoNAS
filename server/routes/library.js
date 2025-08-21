@@ -1,5 +1,6 @@
 const express = require('express')
 const path = require('path')
+const {readFileSync} = require('fs')
 const router = express.Router()
 
 const {scanLibrary} = require('../utils/scanner')
@@ -30,7 +31,7 @@ router.get('/:libraryName', (req, res) => {
 
     let libraryInfo = {}
     try {
-        libraryInfo = require(path.join(searchedLibrary.path, 'info.json'))
+        libraryInfo = JSON.parse(readFileSync(path.join(searchedLibrary.path, 'info.json'), {encoding: 'utf-8'}))
     } catch (error) {
         console.log(`error: library "${req.params.libraryName}" lacks info.json file:`, error)
         res.status(404).send('Library not found, please ensure the library name is correct')
